@@ -4,11 +4,22 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const healthRoutes = require("./routes/health");
-
+const userRoutes = require("./routes/User");
+const incidentRoutes = require("./routes/Incident");
+const rescueTeamRoutes = require("./routes/RescueTeam");
+const alertRoutes = require("./routes/Alert");
+const resourceRoutes = require("./routes/Resource");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/users", userRoutes);
+app.use("/api/incidents", incidentRoutes);
+app.use("/api/rescue-teams", rescueTeamRoutes);
+app.use("/api/alerts", alertRoutes);
+app.use("/api/resources", resourceRoutes);
+console.log("User routes registered");
 
 app.get("/", (req, res) => {
     res.json({
