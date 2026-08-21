@@ -19,4 +19,20 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/", async (req, res) => {
+    try {
+        const resources = await Resource.find().sort({ createdAt: -1 });
+
+        res.json({
+            count: resources.length,
+            resources
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch resources",
+            error: error.message
+        });
+    }
+});
+
 module.exports = router;

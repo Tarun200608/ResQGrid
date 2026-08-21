@@ -19,4 +19,22 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/", async (req, res) => {
+    try {
+        const alerts = await Alert.find()
+            .populate("incident", "title type severity")
+            .sort({ createdAt: -1 });
+
+        res.json({
+            count: alerts.length,
+            alerts
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch alerts",
+            error: error.message
+        });
+    }
+});
+
 module.exports = router;
