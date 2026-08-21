@@ -6,7 +6,10 @@ import Incidents from "./pages/Incidents";
 import RescueTeams from "./pages/RescueTeams";
 import Alerts from "./pages/Alerts";
 import Resources from "./pages/Resources";
+import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
+
+const authorityRoles = ["authority", "admin"];
 
 function App() {
     return (
@@ -14,10 +17,12 @@ function App() {
             <Routes>
                 <Route path="/login" element={<Login />} />
 
+                <Route path="/unauthorized" element={<Unauthorized />} />
+
                 <Route
                     path="/"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={authorityRoles}>
                             <Dashboard />
                         </ProtectedRoute>
                     }
@@ -26,7 +31,7 @@ function App() {
                 <Route
                     path="/incidents"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={authorityRoles}>
                             <Incidents />
                         </ProtectedRoute>
                     }
@@ -35,7 +40,7 @@ function App() {
                 <Route
                     path="/teams"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={authorityRoles}>
                             <RescueTeams />
                         </ProtectedRoute>
                     }
@@ -44,7 +49,7 @@ function App() {
                 <Route
                     path="/alerts"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={authorityRoles}>
                             <Alerts />
                         </ProtectedRoute>
                     }
@@ -53,7 +58,7 @@ function App() {
                 <Route
                     path="/resources"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={authorityRoles}>
                             <Resources />
                         </ProtectedRoute>
                     }
