@@ -1,28 +1,33 @@
 const express = require("express");
 const Incident = require("../models/Incident");
 const authenticateToken = require("../middleware/Auth");
+const authorizeRoles = require("../middleware/Role");
 
 const router = express.Router();
 
-// Create an incident
-router.post("/", authenticateToken, async (req, res) => {
-    try {
-        const incident = await Incident.create({
-            ...req.body,
-            reportedBy: req.user.userId
-        });
+router.post(
+    "/",
+    authenticateToken,
+    authorizeRoles("citizen"),
+    async (req, res) => {
+        try {
+            const incident = await Incident.create({
+                ...req.body,
+                reportedBy: req.user.userId
+            });
 
-        res.status(201).json({
-            message: "Incident created successfully",
-            incident
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "Failed to create incident",
-            error: error.message
-        });
+            res.status(201).json({
+                message: "Incident created successfully",
+                incident
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: "Failed to create incident",
+                error: error.message
+            });
+        }
     }
-});
+);
 
 // Get all incidents
 router.get("/", async (req, res) => {
