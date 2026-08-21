@@ -1,12 +1,16 @@
 const express = require("express");
 const Incident = require("../models/Incident");
+const authenticateToken = require("../middleware/Auth");
 
 const router = express.Router();
 
 // Create an incident
-router.post("/", async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
     try {
-        const incident = await Incident.create(req.body);
+        const incident = await Incident.create({
+            ...req.body,
+            reportedBy: req.user.userId
+        });
 
         res.status(201).json({
             message: "Incident created successfully",

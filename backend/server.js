@@ -9,6 +9,7 @@ const incidentRoutes = require("./routes/Incident");
 const rescueTeamRoutes = require("./routes/RescueTeam");
 const alertRoutes = require("./routes/Alert");
 const resourceRoutes = require("./routes/Resource");
+const authRoutes = require("./routes/Auth");
 const app = express();
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use("/api/incidents", incidentRoutes);
 app.use("/api/rescue-teams", rescueTeamRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/resources", resourceRoutes);
+app.use("/api/auth", authRoutes);
 console.log("User routes registered");
 
 app.get("/", (req, res) => {
