@@ -19,4 +19,20 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/", async (req, res) => {
+    try {
+        const teams = await RescueTeam.find().sort({ createdAt: -1 });
+
+        res.json({
+            count: teams.length,
+            teams
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch rescue teams",
+            error: error.message
+        });
+    }
+});
+
 module.exports = router;

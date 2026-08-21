@@ -60,6 +60,17 @@ const incidentSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
+        },
+        assignedTeam: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "RescueTeam",
+            default: null
+        },
+
+        responseStatus: {
+            type: String,
+            enum: ["unassigned", "assigned", "accepted", "in_progress", "resolved"],
+            default: "unassigned"
         }
     },
     {
